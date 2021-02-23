@@ -1,6 +1,6 @@
 package util
 
-import "fmt"
+import ("fmt")
 
 func Usage() {
 	fmt.Println("Usage:")
@@ -10,3 +10,4 @@ func Usage() {
 	fmt.Println("t print")
 	fmt.Println("\tPrints all log from current month.")
 }
+

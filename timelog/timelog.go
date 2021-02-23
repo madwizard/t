@@ -21,3 +21,7 @@ type Log struct {
 func (log Log) print() {
 	fmt.Print("Here be printing log")
 }
+
+func (log Log) Save() error {
+	return nil
+}
