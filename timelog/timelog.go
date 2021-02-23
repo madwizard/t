@@ -1,6 +1,9 @@
-package tstruct
+package timelog
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Entry struct {
 	Start time.Time
@@ -13,4 +16,8 @@ type Entry struct {
 type Log struct {
 	Series []Entry
 	Id int
+}
+
+func (log Log) print() {
+	fmt.Print("Here be printing log")
 }
