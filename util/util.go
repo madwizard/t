@@ -11,3 +11,7 @@ func Usage() {
 	fmt.Println("\tPrints all log from current month.")
 }
 
+func ReadConfig() error {
+	return nil
+}
+
