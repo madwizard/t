@@ -1,6 +1,11 @@
 package util
 
-import ("fmt")
+import ("fmt"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
+)
 
 func Usage() {
 	fmt.Println("Usage:")
@@ -15,3 +20,19 @@ func ReadConfig() error {
 	return nil
 }
 
+
+func AddLogType(f fyne.App){
+	win := f.NewWindow("Add Log Type")
+	logTitle := widget.NewLabel("Log Title")
+	logDesc := widget.NewLabel("Log Description")
+	closeBttn := widget.NewButton("Close", func() {
+		win.Hide()
+	})
+	content := container.New(layout.NewHBoxLayout(), logTitle, logDesc,closeBttn)
+
+	centered := container.New(layout.NewHBoxLayout())
+	win.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
+
+	win.Resize(fyne.NewSize(200, 200))
+	win.Show()
+}
