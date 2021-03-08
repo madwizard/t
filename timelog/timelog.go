@@ -20,9 +20,10 @@ func (e Entry) Print() {
 	fmt.Println("%+v", e)
 }
 
-func (e Entry) Save() error {
+func (e Entry) Save(path string) error {
+	saveFile := path + "/log.txt"
 	save, _ := json.MarshalIndent(e, "", "")
-	err := ioutil.WriteFile("log.txt", save, 0640)
+	err := ioutil.WriteFile(saveFile, save, 0640)
 	if err != nil {
 		log.Fatalf("Couldn't write to log. %s", err)
 	}
