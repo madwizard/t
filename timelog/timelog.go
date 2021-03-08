@@ -30,7 +30,7 @@ func (l Log) Save(path string) error {
 	save, _ := json.MarshalIndent(l, "", "")
 	err := ioutil.WriteFile(saveFile, save, 0640)
 	if err != nil {
-		log.Fatalf("Couldn't write to log. %s", err)
+		log.Fatalf("save: couldn't write to log: %s", err)
 	}
 	return nil
 }
