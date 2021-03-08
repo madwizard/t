@@ -17,7 +17,7 @@ type Entry struct {
 }
 
 func (e Entry) Print() {
-	fmt.Print("Here be printing Entry")
+	fmt.Print("%+v\n", e)
 }
 
 func (e Entry) Save() error {
