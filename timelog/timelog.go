@@ -2,26 +2,29 @@ package timelog
 
 import (
 	"fmt"
+	"log"
 	"time"
+	"encoding/json"
+	"io/ioutil"
 )
 
 type Entry struct {
-	Start time.Time
-	End time.Time
-	Title string
-	Description string
-	Id int
+	Start time.Time `json:"start"`
+	End time.Time `json:"end"`
+	Title string `json:"title"`
+	Description string `json:"desc"`
+	Id int `json:"id"`
 }
 
-type Log struct {
-	Series []Entry
-	Id int
+func (e Entry) Print() {
+	fmt.Print("Here be printing Entry")
 }
 
-func (log Log) print() {
-	fmt.Print("Here be printing log")
-}
-
-func (log Log) Save() error {
+func (e Entry) Save() error {
+	save, _ := json.MarshalIndent(e, "", "")
+	err := ioutil.WriteFile("log.txt", save, 0640)
+	if err != nil {
+		log.Fatalf("Couldn't write to log. %s", err)
+	}
 	return nil
 }
