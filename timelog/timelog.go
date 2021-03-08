@@ -18,6 +18,7 @@ type Entry struct {
 type Log struct {
 	Id int `json:"id"`
 	Title string `json:"title"`
+	Entries []Entry `json:"entries"`
 }
 
 func (l Log) Print() {
