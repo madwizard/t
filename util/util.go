@@ -27,6 +27,7 @@ func AddLogType(f fyne.App){
 	logDesc := widget.NewLabel("Log Description")
 	closeBttn := widget.NewButton("Close", func() {
 		win.Hide()
+		return
 	})
 	content := container.New(layout.NewHBoxLayout(), logTitle, logDesc,closeBttn)
 
@@ -35,4 +36,5 @@ func AddLogType(f fyne.App){
 
 	win.Resize(fyne.NewSize(200, 200))
 	win.Show()
+
 }
