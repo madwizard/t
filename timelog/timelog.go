@@ -2,22 +2,26 @@ package timelog
 
 import (
 	"encoding/json"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 	"io/ioutil"
 	"log"
 	"time"
 )
 
 type Entry struct {
-	Id int `json:"id"`
-	Start time.Time `json:"start"`
-	End time.Time `json:"end"`
-	Title string `json:"title"`
-	Description string `json:"desc"`
+	Id          int       `json:"id"`
+	Start       time.Time `json:"start"`
+	End         time.Time `json:"end"`
+	Title       string    `json:"title"`
+	Description string    `json:"desc"`
 }
 
 type Log struct {
-	Id int `json:"id"`
-	Title string `json:"title"`
+	Id      int     `json:"id"`
+	Title   string  `json:"title"`
 	Entries []Entry `json:"entries"`
 }
 
@@ -33,4 +37,22 @@ func (l Log) Save(path string) error {
 		log.Fatalf("save: couldn't write to log: %s", err)
 	}
 	return nil
+}
+
+func AddLogType(f fyne.App) {
+	win := f.NewWindow("Add Log Type")
+	logTitle := widget.NewLabel("Log Title")
+	logDesc := widget.NewLabel("Log Description")
+	closeBttn := widget.NewButton("Close", func() {
+		win.Hide()
+		return
+	})
+	content := container.New(layout.NewHBoxLayout(), logTitle, logDesc, closeBttn)
+
+	centered := container.New(layout.NewHBoxLayout())
+	win.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
+
+	win.Resize(fyne.NewSize(200, 200))
+	win.Show()
+
 }
