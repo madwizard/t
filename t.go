@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"github.com/madwizard/t/timelog"
@@ -54,19 +56,29 @@ func main() {
 		},
 	}
 
-	myApp := app.New()
-	myWindow := myApp.NewWindow("TimeTrack")
-	text1 := canvas.NewText(strconv.Itoa(data.Id), color.White)
-	text2 := canvas.NewText(data.Title, color.White)
-	text3 := canvas.NewText(data.Entries[1].Title, color.White)
-	addBttn := widget.NewButton("Add Log Type", func() { go timelog.AddLogType(myApp) })
-	content := container.New(layout.NewHBoxLayout(), text1, text2, layout.NewSpacer(), text3, addBttn)
+	a := app.New()
+	w := a.NewWindow("TimeTrack")
+
+	if desk, ok := a.(desktop.App); ok {
+		m := fyne.NewMenu("timetrack", fyne.NewMenuItem("Show", func() {
+			w.Show()
+		}))
+		desk.SetSystemTrayMenu(m)
+	}
+
+	logId := canvas.NewText(strconv.Itoa(data.Id), color.White)
+	logTitle := canvas.NewText(data.Title, color.White)
+	logEntry := canvas.NewText(data.Entries[1].Title, color.White)
+	logTime := canvas.NewText(data.Entries[1].Start.String(), color.White)
+	addBttn := widget.NewButton("Add Log Type", func() { go timelog.AddLogType(a) })
+	quitBttn := widget.NewButton("Quit", a.Quit)
+	content := container.New(layout.NewHBoxLayout(), logId, logTitle, layout.NewSpacer(), logEntry, logTime, addBttn, quitBttn)
 	centered := container.New(layout.NewHBoxLayout())
-	myWindow.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
+	w.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
 
 	data.Save(path)
-
-	myWindow.Show()
-	myApp.Run()
-	myApp.Quit()
+	w.SetCloseIntercept(func() {
+		w.Hide()
+	})
+	w.ShowAndRun()
 }
