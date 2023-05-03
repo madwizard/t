@@ -69,10 +69,10 @@ func main() {
 	logId := canvas.NewText(strconv.Itoa(data.Id), color.White)
 	logTitle := canvas.NewText(data.Title, color.White)
 	logEntry := canvas.NewText(data.Entries[1].Title, color.White)
-	logTime := canvas.NewText(data.Entries[1].Start.String(), color.White)
+	printTimes := widget.NewButton("Show all times", func() { go timelog.ShowAllTimeEntries(a, data) })
 	addBttn := widget.NewButton("Add Log Type", func() { go timelog.AddLogType(a) })
 	quitBttn := widget.NewButton("Quit", a.Quit)
-	content := container.New(layout.NewHBoxLayout(), logId, logTitle, layout.NewSpacer(), logEntry, logTime, addBttn, quitBttn)
+	content := container.New(layout.NewHBoxLayout(), logId, logTitle, layout.NewSpacer(), logEntry, printTimes, addBttn, quitBttn)
 	centered := container.New(layout.NewHBoxLayout())
 	w.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
 

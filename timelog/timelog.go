@@ -54,5 +54,19 @@ func AddLogType(f fyne.App) {
 
 	win.Resize(fyne.NewSize(200, 200))
 	win.Show()
+}
 
+func ShowAllTimeEntries(f fyne.App, l Log) {
+	win := f.NewWindow("Print all time entries")
+	logTimes := widget.NewLabel("Entered times")
+	closeBttn := widget.NewButton("Close", func() {
+		win.Close()
+		return
+	})
+	content := container.New(layout.NewHBoxLayout(), logTimes, closeBttn)
+	centered := container.New(layout.NewHBoxLayout())
+	win.SetContent(container.New(layout.NewVBoxLayout(), content, centered))
+
+	win.Resize(fyne.NewSize(200, 200))
+	win.Show()
 }
